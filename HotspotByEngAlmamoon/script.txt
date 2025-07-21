@@ -1,0 +1,50 @@
+/ip firewall raw
+add action=add-src-to-address-list address-list=0k/1500K address-list-timeout=\
+    none-dynamic chain=prerouting content=55987b0d-ca6d-464f-93c8-db9ac4a08000 comment=1500K
+
+add action=add-src-to-address-list address-list=0k/512K address-list-timeout=\
+    none-dynamic chain=prerouting content=eng-almamoon-alabbasi-774536114-512K comment=512K
+
+
+add action=add-src-to-address-list address-list=0k/1M address-list-timeout=\
+    none-dynamic chain=prerouting content=55987b0d-ca6d-464f-93c8-db9ac4a08111 comment=1M
+
+
+add action=add-src-to-address-list address-list=0k/2M address-list-timeout=\
+    none-dynamic chain=prerouting content=55987b0d-ca6d-464f-93c8-db9ac4a08222 comment=2M
+
+
+add action=add-src-to-address-list address-list=0k/4M address-list-timeout=\
+    none-dynamic chain=prerouting content=55987b0d-ca6d-464f-93c8-db9ac4a08444 comment=4M
+
+
+
+
+
+
+/ip firewall mangle
+add action=mark-packet chain=postrouting dst-address-list=0k/1500K new-packet-mark=0k/1500K \
+    passthrough=yes comment=1500K
+
+add action=mark-packet chain=postrouting dst-address-list=0k/512K new-packet-mark=0k/512K \
+    passthrough=yes comment=512K
+
+add action=mark-packet chain=postrouting dst-address-list=0k/1M new-packet-mark=0k/1M \
+    passthrough=yes comment=1M
+add action=mark-packet chain=postrouting dst-address-list=0k/2M new-packet-mark=0k/2M \
+    passthrough=yes comment=2M
+add action=mark-packet chain=postrouting dst-address-list=0k/4M new-packet-mark=0k/4M \
+    passthrough=yes comment=4M
+
+
+
+/queue tree
+add max-limit=1500K name=0k/1500K packet-mark=0k/1500K parent=global
+add max-limit=512K name=0k/512K packet-mark=0k/512K parent=global
+add max-limit=1M name=0k/1M packet-mark=0k/1M parent=global
+add max-limit=2M name=0k/2M packet-mark=0k/2M parent=global
+add max-limit=4M name=0k/4M packet-mark=0k/4M parent=global
+
+
+
+
